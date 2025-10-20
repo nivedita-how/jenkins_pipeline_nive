@@ -4,7 +4,7 @@ tools {
   terraform 'terraform'
 }
 options { ansiColor('xterm') } 
- stages { 
+stages { 
    stage ('Checkout Repo') { 
      steps { 
        cleanWs()
@@ -28,29 +28,15 @@ stage ('Terraform version') {
    ''' 
    }
    }
-   
   stage ('Terraform plan') { 
   steps {
    sh '''
-   cd E2ETerraformPipeline/
+   cd terraform-test/
    terraform plan -out=tfplan.out
    terraform show -json tfplan.out
    ''' 
    }
    }
-   
- stage ('Terraform apply') { 
-  steps {
-   sh '''
-   cd E2ETerraformPipeline/
-   terraform apply --auto-approve
-   ''' 
-   }
-        post { 
-        always { 
-            cleanWs()
-         }
-        }
-       }
-  }
-}
+ }
+ }
+
